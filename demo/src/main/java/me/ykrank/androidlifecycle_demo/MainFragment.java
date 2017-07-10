@@ -1,7 +1,9 @@
 package me.ykrank.androidlifecycle_demo;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -9,11 +11,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
+import me.ykrank.androidlifecycle.AndroidLifeCycle;
+
 /**
  * Created by ykrank on 2017/7/9.
  */
 
 public class MainFragment extends Fragment{
+    private Handler handler = new Handler();
+    
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -35,7 +41,15 @@ public class MainFragment extends Fragment{
         view.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.layout_fragment, new MainFragment2()).commit();
+//                getFragmentManager().beginTransaction().replace(R.id.layout_fragment, new MainFragment2()).commit();
+                new MainDialogFragment().show(getFragmentManager(), MainDialogFragment.TAG);
+//                startActivity(new Intent(getContext(), Main2Activity.class));
+                handler.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        AndroidLifeCycle.get(MainFragment.this);
+                    }
+                }, 3000);
             }
         });
         return view;

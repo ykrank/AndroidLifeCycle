@@ -6,7 +6,7 @@ android {
 
     defaultConfig {
         applicationId "me.ykrank.androidlifecycle_demo"
-        minSdkVersion 9
+        minSdkVersion 11
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
