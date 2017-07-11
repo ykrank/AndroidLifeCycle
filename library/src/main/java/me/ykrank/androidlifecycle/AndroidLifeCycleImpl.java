@@ -33,7 +33,7 @@ import me.ykrank.androidlifecycle.util.Util;
 public class AndroidLifeCycleImpl implements Handler.Callback {
     private static final String TAG = "AndroidLifeCycle";
     private static final String FRAGMENT_TAG = "me.ykrank.androidlifecycle.manager";
-    private static boolean loggable = true;
+    static boolean loggable = false;
 
     private static final int ID_REMOVE_FRAGMENT_MANAGER = 1;
 

@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.support.annotation.Nullable;
 import android.util.Log;
 
+import me.ykrank.androidlifecycle.AndroidLifeCycle;
 import me.ykrank.androidlifecycle.event.InitSate;
 import me.ykrank.androidlifecycle.lifecycle.LifeCycle;
 
@@ -11,6 +12,8 @@ import me.ykrank.androidlifecycle.lifecycle.LifeCycle;
 
  */
 public class LifeCycleManagerFragment extends Fragment {
+    static final String TAG = "LifeCycleFragment";
+    
     @Nullable
     private LifeCycleManager lifeCycleManager;
     @Nullable
@@ -87,7 +90,7 @@ public class LifeCycleManagerFragment extends Fragment {
             init = true;
         }
         if (lifeCycle != null) {
-            lifeCycle.onStart();
+            lifeCycle.onResume();
         }
     }
 
@@ -128,7 +131,9 @@ public class LifeCycleManagerFragment extends Fragment {
     }
 
     private void l(String msg) {
-        Log.d("LifeCycleFragment", msg);
+        if (AndroidLifeCycle.loggable() && Log.isLoggable(TAG, Log.DEBUG)) {
+            Log.d(TAG, msg);
+        }
     }
 
 }

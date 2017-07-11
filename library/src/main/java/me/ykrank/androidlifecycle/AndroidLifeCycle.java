@@ -41,8 +41,8 @@ public class AndroidLifeCycle {
 
     /**
      * Get a LifeCycleManager by passing in a context.
-     * 
-     * @param context activity, or wrapped activity, will not be retained
+     *
+     * @param context  activity, or wrapped activity, will not be retained
      * @param initSate activity state when call this method
      * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.ActivityEvent}
      */
@@ -53,7 +53,7 @@ public class AndroidLifeCycle {
 
     /**
      * Get a LifeCycleManager by passing in a {@link FragmentActivity}.
-     * 
+     *
      * @param activity listened activity, will not be retained
      * @param initSate activity state when call this method
      * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.ActivityEvent}
@@ -65,7 +65,7 @@ public class AndroidLifeCycle {
 
     /**
      * Get a LifeCycleManager by passing in a {@link Activity}.
-     * 
+     *
      * @param activity listened activity, will not be retained
      * @param initSate activity state when call this method
      * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.ActivityEvent}
@@ -77,8 +77,9 @@ public class AndroidLifeCycle {
 
     /**
      * Get a LifeCycleManager by passing in a {@link Fragment}.
-     * 
+     * <p>
      * <p>Auto init fragment state</p>
+     *
      * @param fragment listened fragment, will not be retained
      * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.FragmentEvent}
      */
@@ -89,7 +90,7 @@ public class AndroidLifeCycle {
 
     /**
      * Get a LifeCycleManager by passing in a {@link Fragment}.
-     * 
+     *
      * @param fragment listened fragment, will not be retained
      * @param initSate fragment state when call this method
      * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.FragmentEvent}
@@ -101,11 +102,27 @@ public class AndroidLifeCycle {
 
     /**
      * Get a LifeCycleManager by passing in a {@link android.app.Fragment}.
-     * 
+     * <p>
      * <p>Only used after JELLY_BEAN_MR1(api 17), as fragment after this could add child fragment</p>
-     * @param fragment
-     * @param initSate
-     * @return
+     * <p>Auto init fragment state</p>
+     *
+     * @param fragment listened fragment, will not be retained
+     * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.FragmentEvent}
+     */
+    @NonNull
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public static FragmentLifeCycleManager with(@NonNull android.app.Fragment fragment) {
+        return with(fragment, getParentState(fragment));
+    }
+
+    /**
+     * Get a LifeCycleManager by passing in a {@link android.app.Fragment}.
+     * <p>
+     * <p>Only used after JELLY_BEAN_MR1(api 17), as fragment after this could add child fragment</p>
+     *
+     * @param fragment listened fragment, will not be retained
+     * @param initSate fragment state when call this method
+     * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.FragmentEvent}
      */
     @NonNull
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
@@ -123,5 +140,21 @@ public class AndroidLifeCycle {
             initState = InitSate.BEFORE_STARTED;
         }
         return initState;
+    }
+
+    static InitSate getParentState(android.app.Fragment fragment) {
+        InitSate initState;
+        if (fragment.isResumed()) {
+            initState = InitSate.RESUMED;
+        } else if (fragment.isVisible()) {
+            initState = InitSate.BEFORE_RESUMED;
+        } else {
+            initState = InitSate.BEFORE_STARTED;
+        }
+        return initState;
+    }
+
+    public static boolean loggable() {
+        return AndroidLifeCycleImpl.loggable;
     }
 }
