@@ -20,7 +20,8 @@ public class FragmentLifeCycleManager implements LifeCycleManager {
         return fragmentLifeCycle;
     }
 
-    public void listen(FragmentEvent fragmentEvent, LifeCycleListener listener) {
+    public FragmentLifeCycleManager listen(FragmentEvent fragmentEvent, LifeCycleListener listener) {
         fragmentLifeCycle.addLifeCycleListener(fragmentEvent, listener);
+        return this;
     }
 }

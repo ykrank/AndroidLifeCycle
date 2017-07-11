@@ -20,7 +20,8 @@ public class ActivityLifeCycleManager implements LifeCycleManager {
         return activityLifeCycle;
     }
 
-    public void listen(ActivityEvent activityEvent, LifeCycleListener listener) {
+    public ActivityLifeCycleManager listen(ActivityEvent activityEvent, LifeCycleListener listener) {
         activityLifeCycle.addLifeCycleListener(activityEvent, listener);
+        return this;
     }
 }

@@ -2,19 +2,16 @@ package me.ykrank.androidlifecycle;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Build;
 import android.support.annotation.NonNull;
+import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentManager;
-import android.util.Log;
 
 import me.ykrank.androidlifecycle.event.InitSate;
 import me.ykrank.androidlifecycle.manager.ActivityLifeCycleManager;
 import me.ykrank.androidlifecycle.manager.FragmentLifeCycleManager;
-import me.ykrank.androidlifecycle.manager.LifeCycleManagerSupportFragment;
-import me.ykrank.androidlifecycle.util.Preconditions;
-import me.ykrank.androidlifecycle.util.Util;
 
 /**
  * A singleton to present a simple static interface for building lifecycle manager with context, activity, fragment
@@ -22,61 +19,101 @@ import me.ykrank.androidlifecycle.util.Util;
 
 public class AndroidLifeCycle {
     private static final String TAG = "AndroidLifeCycle";
-    private static final String FRAGMENT_TAG = "me.ykrank.androidlifecycle.manager";
-    private static boolean loggable = true;
+    private static volatile AndroidLifeCycle instance;
 
-    @NonNull
-    public static ActivityLifeCycleManager get(@NonNull FragmentActivity activity) {
-        return get(activity, InitSate.BEFORE_STARTED);
-    }
+    private AndroidLifeCycleImpl lifeCycleImpl = new AndroidLifeCycleImpl();
 
-    @NonNull
-    public static ActivityLifeCycleManager get(@NonNull FragmentActivity activity, InitSate initSate) {
-        Util.assertMainThread();
-        assertNotDestroyed(activity);
-        FragmentManager fm = activity.getSupportFragmentManager();
-        LifeCycleManagerSupportFragment current =
-                (LifeCycleManagerSupportFragment) fm.findFragmentByTag(FRAGMENT_TAG);
-        if (current == null) {
-            current = new LifeCycleManagerSupportFragment();
-            current.setParentFragmentHint(null);
-            current.setInitState(initSate);
-            current.setLifeCycleManager(new ActivityLifeCycleManager());
-
-            fm.beginTransaction().add(current, FRAGMENT_TAG).commitNowAllowingStateLoss();
-        }
-        return (ActivityLifeCycleManager) Preconditions.checkNotNull(current.getLifeCycleManager());
-    }
-
-    @NonNull
-    public static FragmentLifeCycleManager get(@NonNull Fragment fragment) {
-        return get(fragment, getParentState(fragment));
-    }
-
-    @NonNull
-    public static FragmentLifeCycleManager get(@NonNull Fragment fragment, InitSate initSate) {
-        Preconditions.checkNotNull(fragment.getActivity(),
-                "You cannot start a load on a fragment before it is attached or after it is destroyed");
-        Util.assertMainThread();
-        FragmentManager fm = fragment.getChildFragmentManager();
-        LifeCycleManagerSupportFragment current =
-                (LifeCycleManagerSupportFragment) fm.findFragmentByTag(FRAGMENT_TAG);
-        if (current == null) {
-            if (loggable) {
-                Log.d(TAG, "isAdded:" + fragment.isAdded() + ",isResumed:" + fragment.isResumed() + ",isVisible:" + fragment.isVisible());
+    /**
+     * Get the singleton.
+     *
+     * @return the singleton
+     */
+    public static AndroidLifeCycle get() {
+        if (instance == null) {
+            synchronized (AndroidLifeCycle.class) {
+                if (instance == null) {
+                    instance = new AndroidLifeCycle();
+                }
             }
-
-            current = new LifeCycleManagerSupportFragment();
-            current.setParentFragmentHint(fragment);
-            current.setInitState(initSate);
-            current.setLifeCycleManager(new FragmentLifeCycleManager());
-
-            fm.beginTransaction().add(current, FRAGMENT_TAG).commitNowAllowingStateLoss();
         }
-        return (FragmentLifeCycleManager) Preconditions.checkNotNull(current.getLifeCycleManager());
+        return instance;
     }
 
-    private static InitSate getParentState(Fragment fragment) {
+    /**
+     * Get a LifeCycleManager by passing in a context.
+     * 
+     * @param context activity, or wrapped activity, will not be retained
+     * @param initSate activity state when call this method
+     * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.ActivityEvent}
+     */
+    @NonNull
+    public static ActivityLifeCycleManager with(@Nullable Context context, InitSate initSate) {
+        return get().lifeCycleImpl.with(context, initSate);
+    }
+
+    /**
+     * Get a LifeCycleManager by passing in a {@link FragmentActivity}.
+     * 
+     * @param activity listened activity, will not be retained
+     * @param initSate activity state when call this method
+     * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.ActivityEvent}
+     */
+    @NonNull
+    public static ActivityLifeCycleManager with(@NonNull FragmentActivity activity, InitSate initSate) {
+        return get().lifeCycleImpl.with(activity, initSate);
+    }
+
+    /**
+     * Get a LifeCycleManager by passing in a {@link Activity}.
+     * 
+     * @param activity listened activity, will not be retained
+     * @param initSate activity state when call this method
+     * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.ActivityEvent}
+     */
+    @NonNull
+    public static ActivityLifeCycleManager with(@NonNull Activity activity, InitSate initSate) {
+        return get().lifeCycleImpl.with(activity, initSate);
+    }
+
+    /**
+     * Get a LifeCycleManager by passing in a {@link Fragment}.
+     * 
+     * <p>Auto init fragment state</p>
+     * @param fragment listened fragment, will not be retained
+     * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.FragmentEvent}
+     */
+    @NonNull
+    public static FragmentLifeCycleManager with(@NonNull Fragment fragment) {
+        return with(fragment, getParentState(fragment));
+    }
+
+    /**
+     * Get a LifeCycleManager by passing in a {@link Fragment}.
+     * 
+     * @param fragment listened fragment, will not be retained
+     * @param initSate fragment state when call this method
+     * @return A LifeCycleManager to listen {@link me.ykrank.androidlifecycle.event.FragmentEvent}
+     */
+    @NonNull
+    public static FragmentLifeCycleManager with(@NonNull Fragment fragment, InitSate initSate) {
+        return get().lifeCycleImpl.with(fragment, initSate);
+    }
+
+    /**
+     * Get a LifeCycleManager by passing in a {@link android.app.Fragment}.
+     * 
+     * <p>Only used after JELLY_BEAN_MR1(api 17), as fragment after this could add child fragment</p>
+     * @param fragment
+     * @param initSate
+     * @return
+     */
+    @NonNull
+    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
+    public static FragmentLifeCycleManager with(@NonNull android.app.Fragment fragment, InitSate initSate) {
+        return get().lifeCycleImpl.with(fragment, initSate);
+    }
+
+    static InitSate getParentState(Fragment fragment) {
         InitSate initState;
         if (fragment.isResumed()) {
             initState = InitSate.RESUMED;
@@ -86,12 +123,5 @@ public class AndroidLifeCycle {
             initState = InitSate.BEFORE_STARTED;
         }
         return initState;
-    }
-
-    @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
-    private static void assertNotDestroyed(Activity activity) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1 && activity.isDestroyed()) {
-            throw new IllegalArgumentException("You cannot start a load for a destroyed activity");
-        }
     }
 }
