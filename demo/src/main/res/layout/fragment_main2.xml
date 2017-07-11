@@ -3,11 +3,10 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <Button
-        android:id="@+id/button1"
+    <TextView
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_gravity="center"
         android:gravity="center"
-        android:text="goActivity2" />
+        android:text="Fragment2" />
 </FrameLayout>

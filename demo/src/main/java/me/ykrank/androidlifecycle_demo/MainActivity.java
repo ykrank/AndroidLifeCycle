@@ -5,8 +5,13 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.View;
 
 import me.ykrank.androidlifecycle.AndroidLifeCycle;
+import me.ykrank.androidlifecycle.event.ActivityEvent;
+import me.ykrank.androidlifecycle.event.FragmentEvent;
+import me.ykrank.androidlifecycle.event.InitSate;
+import me.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
 
 public class MainActivity extends AppCompatActivity {
     static final String FRAGMENT_TAG = "me.ykrank.androidlifecycle";
@@ -14,14 +19,85 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        setTitle("MainActivity");
+        
         l("onCreate");
         setContentView(R.layout.activity_main);
 
-        MainFragment mainFragment = new MainFragment();
+        final MainFragment mainFragment = new MainFragment();
+        
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.layout_fragment, mainFragment).commitNow();
 
-        AndroidLifeCycle.get(mainFragment);
+        AndroidLifeCycle.with(this, InitSate.BEFORE_STARTED)
+                .listen(ActivityEvent.START, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.START");
+                    }
+                })
+                .listen(ActivityEvent.RESUME, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.RESUME");
+                    }
+                })
+                .listen(ActivityEvent.PAUSE, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.PAUSE");
+                    }
+                })
+                .listen(ActivityEvent.STOP, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.STOP");
+                    }
+                })
+                .listen(ActivityEvent.DESTROY, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.DESTROY");
+                    }
+                });
+
+        AndroidLifeCycle.with(mainFragment)
+                .listen(FragmentEvent.START, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("MainFragment FragmentEvent.START");
+                    }
+                })
+                .listen(FragmentEvent.RESUME, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("MainFragment FragmentEvent.RESUME");
+                    }
+                })
+                .listen(FragmentEvent.PAUSE, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("MainFragment FragmentEvent.PAUSE");
+                    }
+                })
+                .listen(FragmentEvent.STOP, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("MainFragment FragmentEvent.STOP");
+                    }
+                })
+                .listen(FragmentEvent.DESTROY_VIEW, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("MainFragment FragmentEvent.DESTROY_VIEW");
+                    }
+                })
+                .listen(FragmentEvent.DESTROY, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("MainFragment FragmentEvent.DESTROY");
+                    }
+                });
     }
 
     @Override

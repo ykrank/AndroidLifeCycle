@@ -11,15 +11,13 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.ykrank.androidlifecycle.AndroidLifeCycle;
-
 /**
  * Created by ykrank on 2017/7/9.
  */
 
-public class MainFragment extends Fragment{
+public class MainFragment extends Fragment {
     private Handler handler = new Handler();
-    
+
     @Override
     public void onAttach(Context context) {
         super.onAttach(context);
@@ -38,18 +36,11 @@ public class MainFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         l("onCreateView");
 
-        view.setOnClickListener(new View.OnClickListener() {
+        View button = view.findViewById(R.id.button1);
+        button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-//                getFragmentManager().beginTransaction().replace(R.id.layout_fragment, new MainFragment2()).commit();
-                new MainDialogFragment().show(getFragmentManager(), MainDialogFragment.TAG);
-//                startActivity(new Intent(getContext(), Main2Activity.class));
-                handler.postDelayed(new Runnable() {
-                    @Override
-                    public void run() {
-                        AndroidLifeCycle.get(MainFragment.this);
-                    }
-                }, 3000);
+                startActivity(new Intent(getContext(), Main2Activity.class));
             }
         });
         return view;
@@ -103,7 +94,7 @@ public class MainFragment extends Fragment{
         l("onDetach");
     }
 
-    private void l(String msg){
+    private void l(String msg) {
         Log.d("MainFragment", msg);
     }
 }
