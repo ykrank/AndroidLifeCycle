@@ -5,7 +5,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.View;
 
 import me.ykrank.androidlifecycle.AndroidLifeCycle;
 import me.ykrank.androidlifecycle.event.ActivityEvent;
@@ -29,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.layout_fragment, mainFragment).commitNow();
 
-        AndroidLifeCycle.with(this, InitSate.BEFORE_STARTED)
+        AndroidLifeCycle.with(this, InitSate.CREATED)
                 .listen(ActivityEvent.START, new LifeCycleListener() {
                     @Override
                     public void accept() {
