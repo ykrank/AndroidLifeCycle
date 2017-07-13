@@ -28,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.layout_fragment, mainFragment).commitNow();
 
-        AndroidLifeCycle.with(this, InitSate.CREATED)
+        AndroidLifeCycle.with(this)
                 .listen(ActivityEvent.START, new LifeCycleListener() {
                     @Override
                     public void accept() {
