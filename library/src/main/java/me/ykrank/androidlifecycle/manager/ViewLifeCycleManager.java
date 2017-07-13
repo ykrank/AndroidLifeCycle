@@ -29,7 +29,7 @@ public class ViewLifeCycleManager {
     }
 
     @NonNull
-    public static ViewLifeCycleManager get(@NonNull View view, InitSate contextState) {
+    public static ViewLifeCycleManager get(@NonNull View view) {
         Util.assertMainThread();
         ViewLifeCycleManager manager = (ViewLifeCycleManager) view.getTag(R.id.tag_view_lifecycle_manager);
         if (manager != null) {
@@ -40,7 +40,7 @@ public class ViewLifeCycleManager {
         if (fragmentLifeCycleManager != null) {
             manager = new ViewLifeCycleManager(view, fragmentLifeCycleManager);
         } else {
-            manager = new ViewLifeCycleManager(view, AndroidLifeCycle.with(view.getContext(), contextState));
+            manager = new ViewLifeCycleManager(view, AndroidLifeCycle.with(view.getContext()));
         }
         view.setTag(R.id.tag_view_lifecycle_manager, manager);
 

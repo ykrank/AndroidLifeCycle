@@ -49,22 +49,6 @@ public class AndroidLifeCycleImpl implements Handler.Callback {
      */
     private final Handler handler = new Handler(Looper.getMainLooper(), this /* Callback */);
 
-    ActivityLifeCycleManager with(@Nullable Context context, InitSate initSate) {
-        Util.assertMainThread();
-        if (context == null) {
-            throw new IllegalArgumentException("You cannot start a load on a null Context");
-        }
-        if (context instanceof FragmentActivity) {
-            return with((FragmentActivity) context, initSate);
-        } else if (context instanceof Activity) {
-            return with((Activity) context, initSate);
-        } else if (context instanceof ContextWrapper) {
-            return with(((ContextWrapper) context).getBaseContext(), initSate);
-        }
-
-        throw new IllegalArgumentException("Illegal type of context:" + context.toString());
-    }
-
     @NonNull
     ActivityLifeCycleManager with(@NonNull FragmentActivity activity, InitSate initSate) {
         Util.assertMainThread();
