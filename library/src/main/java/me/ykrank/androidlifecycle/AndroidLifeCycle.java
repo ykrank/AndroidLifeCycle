@@ -144,9 +144,9 @@ public class AndroidLifeCycle {
         if (fragment.isResumed()) {
             initState = InitSate.RESUMED;
         } else if (fragment.isVisible()) {
-            initState = InitSate.BEFORE_RESUMED;
+            initState = InitSate.STARTED;
         } else {
-            initState = InitSate.BEFORE_STARTED;
+            initState = InitSate.CREATED;
         }
         return initState;
     }
@@ -156,9 +156,9 @@ public class AndroidLifeCycle {
         if (fragment.isResumed()) {
             initState = InitSate.RESUMED;
         } else if (fragment.isVisible()) {
-            initState = InitSate.BEFORE_RESUMED;
+            initState = InitSate.STARTED;
         } else {
-            initState = InitSate.BEFORE_STARTED;
+            initState = InitSate.CREATED;
         }
         return initState;
     }

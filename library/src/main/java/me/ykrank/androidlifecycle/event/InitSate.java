@@ -5,7 +5,8 @@ package me.ykrank.androidlifecycle.event;
  */
 
 public enum InitSate {
-    BEFORE_STARTED,
-    BEFORE_RESUMED,
+    NONE,
+    CREATED,
+    STARTED,
     RESUMED
 }

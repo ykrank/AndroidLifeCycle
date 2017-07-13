@@ -29,7 +29,7 @@ public class LifeCycleManagerFragment extends Fragment {
      * 1: isAdded:true,isResumed:false,isVisible:true
      * 2: isAdded:true,isResumed:true,isVisible:true
      */
-    private InitSate initState = InitSate.BEFORE_STARTED;
+    private InitSate initState = InitSate.CREATED;
     private boolean init = false;
 
     @Nullable
@@ -66,7 +66,7 @@ public class LifeCycleManagerFragment extends Fragment {
         if (!init) {
             if (initState == InitSate.RESUMED) {
                 return;
-            } else if (initState == InitSate.BEFORE_RESUMED) {
+            } else if (initState == InitSate.STARTED) {
                 init = true;
                 return;
             }

@@ -10,6 +10,7 @@ import android.os.Looper;
 import android.os.Message;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.annotation.RestrictTo;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
@@ -29,7 +30,7 @@ import me.ykrank.androidlifecycle.util.Util;
 /**
  * delegate of {@link AndroidLifeCycle}
  */
-
+@RestrictTo({RestrictTo.Scope.LIBRARY_GROUP})
 public class AndroidLifeCycleImpl implements Handler.Callback {
     private static final String TAG = "AndroidLifeCycle";
     private static final String FRAGMENT_TAG = "me.ykrank.androidlifecycle.manager";
