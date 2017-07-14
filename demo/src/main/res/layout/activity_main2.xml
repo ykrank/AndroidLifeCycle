@@ -11,6 +11,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Go fragment2" />
+    <Button
+        android:id="@+id/button2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Go fragment3" />
 
     <FrameLayout
         android:id="@+id/layout_fragment"

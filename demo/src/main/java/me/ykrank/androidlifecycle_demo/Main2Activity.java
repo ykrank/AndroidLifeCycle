@@ -28,6 +28,13 @@ public class Main2Activity extends AppCompatActivity {
             }
         });
 
+        findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getFragmentManager().beginTransaction().replace(R.id.layout_fragment, new MainFragment3()).commit();
+            }
+        });
+
         AndroidLifeCycle.with(this)
                 .listen(ActivityEvent.START, new LifeCycleListener() {
                     @Override

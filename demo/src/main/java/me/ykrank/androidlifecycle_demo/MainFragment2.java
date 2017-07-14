@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 
 import me.ykrank.androidlifecycle.AndroidLifeCycle;
 import me.ykrank.androidlifecycle.event.FragmentEvent;
+import me.ykrank.androidlifecycle.event.ViewEvent;
 import me.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
 
 /**
@@ -27,48 +28,82 @@ public class MainFragment2 extends android.app.Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main2, container, false);
 
-        view.findViewById(R.id.text).setOnClickListener(new View.OnClickListener() {
+        View textView = view.findViewById(R.id.text);
+        textView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 AndroidLifeCycle.with(MainFragment2.this)
                         .listen(FragmentEvent.START, new LifeCycleListener() {
                             @Override
                             public void accept() {
-                                l("MainFragment2 FragmentEvent.START");
+                                l("FragmentEvent.START");
                             }
                         })
                         .listen(FragmentEvent.RESUME, new LifeCycleListener() {
                             @Override
                             public void accept() {
-                                l("MainFragment2 FragmentEvent.RESUME");
+                                l("FragmentEvent.RESUME");
                             }
                         })
                         .listen(FragmentEvent.PAUSE, new LifeCycleListener() {
                             @Override
                             public void accept() {
-                                l("MainFragment2 FragmentEvent.PAUSE");
+                                l("FragmentEvent.PAUSE");
                             }
                         })
                         .listen(FragmentEvent.STOP, new LifeCycleListener() {
                             @Override
                             public void accept() {
-                                l("MainFragment2 FragmentEvent.STOP");
+                                l("FragmentEvent.STOP");
                             }
                         })
                         .listen(FragmentEvent.DESTROY_VIEW, new LifeCycleListener() {
                             @Override
                             public void accept() {
-                                l("MainFragment2 FragmentEvent.DESTROY_VIEW");
+                                l("FragmentEvent.DESTROY_VIEW");
                             }
                         })
                         .listen(FragmentEvent.DESTROY, new LifeCycleListener() {
                             @Override
                             public void accept() {
-                                l("MainFragment2 FragmentEvent.DESTROY");
+                                l("FragmentEvent.DESTROY");
                             }
                         });
             }
         });
+
+        AndroidLifeCycle.bindFragment(textView, this);
+        AndroidLifeCycle.with(textView)
+                .listen(ViewEvent.START, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ViewEvent.START");
+                    }
+                })
+                .listen(ViewEvent.RESUME, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ViewEvent.RESUME");
+                    }
+                })
+                .listen(ViewEvent.PAUSE, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ViewEvent.PAUSE");
+                    }
+                })
+                .listen(ViewEvent.STOP, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ViewEvent.STOP");
+                    }
+                })
+                .listen(ViewEvent.DESTROY, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ViewEvent.DESTROY");
+                    }
+                });
         return view;
     }
 
