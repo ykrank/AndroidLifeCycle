@@ -1,13 +1,12 @@
 package me.ykrank.androidlifecycle.lifecycle;
 
 import android.support.annotation.NonNull;
+import android.support.v4.util.ArraySet;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 import me.ykrank.androidlifecycle.event.ActivityEvent;
 import me.ykrank.androidlifecycle.util.Util;
@@ -59,13 +58,14 @@ public class ActivityLifeCycle implements LifeCycle {
         for (LifeCycleListener listener : getLifeCycleListeners(ActivityEvent.DESTROY)) {
             listener.accept();
         }
+        lifeCycleListener.clear();
     }
 
     @NonNull
     private Set<LifeCycleListener> getDirtyLifeCycleListeners(ActivityEvent activityEvent) {
         Set<LifeCycleListener> lifeCycleListenerSet = lifeCycleListener.get(activityEvent);
         if (lifeCycleListenerSet == null) {
-            lifeCycleListenerSet = Collections.newSetFromMap(new WeakHashMap<LifeCycleListener, Boolean>());
+            lifeCycleListenerSet = new ArraySet<>();
             lifeCycleListener.put(activityEvent, lifeCycleListenerSet);
         }
         return lifeCycleListenerSet;

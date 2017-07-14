@@ -1,13 +1,12 @@
 package me.ykrank.androidlifecycle.lifecycle;
 
 import android.support.annotation.NonNull;
+import android.support.v4.util.ArraySet;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.WeakHashMap;
 
 import me.ykrank.androidlifecycle.event.FragmentEvent;
 import me.ykrank.androidlifecycle.util.Util;
@@ -69,7 +68,7 @@ public class FragmentLifeCycle implements LifeCycle {
         Util.assertMainThread();
         Set<LifeCycleListener> lifeCycleListenerSet = lifeCycleListener.get(fragmentEvent);
         if (lifeCycleListenerSet == null) {
-            lifeCycleListenerSet = Collections.newSetFromMap(new WeakHashMap<LifeCycleListener, Boolean>());
+            lifeCycleListenerSet = new ArraySet<>();
             lifeCycleListener.put(fragmentEvent, lifeCycleListenerSet);
         }
         return lifeCycleListenerSet;

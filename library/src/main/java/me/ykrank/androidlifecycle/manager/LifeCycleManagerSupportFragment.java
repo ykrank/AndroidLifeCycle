@@ -127,6 +127,7 @@ public class LifeCycleManagerSupportFragment extends Fragment {
         l("onDestroy");
         if (lifeCycle != null) {
             lifeCycle.onDestroy();
+            lifeCycle = null;
         }
     }
 

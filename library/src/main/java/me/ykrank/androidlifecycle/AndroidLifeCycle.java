@@ -11,9 +11,6 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.view.View;
 
-import java.lang.ref.WeakReference;
-
-import me.ykrank.androidlifecycle.event.InitSate;
 import me.ykrank.androidlifecycle.lifemap.ActivityLifecycleMap;
 import me.ykrank.androidlifecycle.manager.ActivityLifeCycleManager;
 import me.ykrank.androidlifecycle.manager.FragmentLifeCycleManager;
@@ -93,7 +90,7 @@ public class AndroidLifeCycle {
 
     /**
      * Get a LifeCycleManager by passing in a {@link Fragment}.
-     * <p>
+     * 
      * <p>Auto init fragment state</p>
      *
      * @param fragment listened fragment, will not be retained
@@ -101,12 +98,12 @@ public class AndroidLifeCycle {
      */
     @NonNull
     public static FragmentLifeCycleManager with(@NonNull Fragment fragment) {
-        return get().lifeCycleImpl.with(fragment, getParentState(fragment));
+        return get().lifeCycleImpl.with(fragment, FragmentLifeCycleManager.getParentState(fragment));
     }
 
     /**
      * Get a LifeCycleManager by passing in a {@link android.app.Fragment}.
-     * <p>
+     * 
      * <p>Only used after JELLY_BEAN_MR1(api 17), as fragment after this could add child fragment</p>
      * <p>Auto init fragment state</p>
      *
@@ -116,61 +113,26 @@ public class AndroidLifeCycle {
     @NonNull
     @TargetApi(Build.VERSION_CODES.JELLY_BEAN_MR1)
     public static FragmentLifeCycleManager with(@NonNull android.app.Fragment fragment) {
-        return get().lifeCycleImpl.with(fragment, getParentState(fragment));
+        return get().lifeCycleImpl.with(fragment, FragmentLifeCycleManager.getParentState(fragment));
     }
 
+    /**
+     * Get a LifeCycleManager by passing in a {@link View}.
+     * 
+     * <p>If {@link #bindFragment(View, Fragment)}, listen to bound fragment, else listen to {@link View#getContext()}</p>
+     * @param view listened view, will not be retained
+     * @return LifeCycleManager to listen bound fragment or context
+     */
     public static ViewLifeCycleManager with(@NonNull View view) {
         return ViewLifeCycleManager.get(view);
     }
 
-    static InitSate getParentState(Fragment fragment) {
-        InitSate initState;
-        if (fragment.isResumed()) {
-            initState = InitSate.RESUMED;
-        } else if (fragment.isVisible()) {
-            initState = InitSate.STARTED;
-        } else {
-            initState = InitSate.CREATED;
-        }
-        return initState;
-    }
-
-    static InitSate getParentState(android.app.Fragment fragment) {
-        InitSate initState;
-        if (fragment.isResumed()) {
-            initState = InitSate.RESUMED;
-        } else if (fragment.isVisible()) {
-            initState = InitSate.STARTED;
-        } else {
-            initState = InitSate.CREATED;
-        }
-        return initState;
-    }
-
     public static void bindFragment(View view, Fragment fragment) {
-        view.setTag(R.id.tag_view_lifecycle_bind_fragment, new WeakReference<>(fragment));
+        ViewLifeCycleManager.bindFragment(view, fragment);
     }
 
     public static void bindFragment(View view, android.app.Fragment fragment) {
-        view.setTag(R.id.tag_view_lifecycle_bind_fragment, new WeakReference<>(fragment));
-    }
-
-    @Nullable
-    public static FragmentLifeCycleManager getBoundFragmentLifeCycle(View view) {
-        Util.assertMainThread();
-        Object bindFragmentReference = view.getTag(R.id.tag_view_lifecycle_bind_fragment);
-        if (bindFragmentReference != null) {
-            Object bindFragment = ((WeakReference<Object>) bindFragmentReference).get();
-            if (bindFragment != null) {
-                if (bindFragment instanceof Fragment) {
-                    return with((Fragment) bindFragment);
-                }
-                if (bindFragment instanceof android.app.Fragment) {
-                    return with((android.app.Fragment) bindFragment);
-                }
-            }
-        }
-        return null;
+        ViewLifeCycleManager.bindFragment(view, fragment);
     }
 
     public static boolean loggable() {
