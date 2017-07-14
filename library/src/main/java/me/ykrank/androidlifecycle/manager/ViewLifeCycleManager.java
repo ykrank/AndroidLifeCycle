@@ -79,8 +79,11 @@ public class ViewLifeCycleManager {
         view.setTag(R.id.tag_view_lifecycle_bind_fragment, new WeakReference<>(fragment));
     }
 
+    /**
+     * Get bound {@link android.app.Fragment} or {@link Fragment}
+     */
     @Nullable
-    static Object getBoundFragment(View view) {
+    public static Object getBoundFragment(View view) {
         Util.assertMainThread();
         Object bindFragmentReference = view.getTag(R.id.tag_view_lifecycle_bind_fragment);
         if (bindFragmentReference != null) {
