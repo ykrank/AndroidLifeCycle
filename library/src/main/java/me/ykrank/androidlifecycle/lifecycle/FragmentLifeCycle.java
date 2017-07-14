@@ -85,4 +85,8 @@ public class FragmentLifeCycle implements LifeCycle {
     public boolean addLifeCycleListener(FragmentEvent fragmentEvent, LifeCycleListener listener) {
         return getDirtyLifeCycleListeners(fragmentEvent).add(listener);
     }
+
+    public boolean removeLifeCycleListener(FragmentEvent fragmentEvent, LifeCycleListener listener) {
+        return getDirtyLifeCycleListeners(fragmentEvent).remove(listener);
+    }
 }

@@ -82,4 +82,8 @@ public class ActivityLifeCycle implements LifeCycle {
     public boolean addLifeCycleListener(ActivityEvent activityEvent, LifeCycleListener listener) {
         return getDirtyLifeCycleListeners(activityEvent).add(listener);
     }
+
+    public boolean removeLifeCycleListener(ActivityEvent activityEvent, LifeCycleListener listener) {
+        return getDirtyLifeCycleListeners(activityEvent).remove(listener);
+    }
 }
