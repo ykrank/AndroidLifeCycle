@@ -24,4 +24,9 @@ public class ActivityLifeCycleManager implements LifeCycleManager {
         activityLifeCycle.addLifeCycleListener(activityEvent, listener);
         return this;
     }
+
+    public ActivityLifeCycleManager unListen(ActivityEvent activityEvent, LifeCycleListener listener) {
+        activityLifeCycle.removeLifeCycleListener(activityEvent, listener);
+        return this;
+    }
 }

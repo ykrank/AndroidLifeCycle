@@ -27,6 +27,11 @@ public class FragmentLifeCycleManager implements LifeCycleManager {
         return this;
     }
 
+    public FragmentLifeCycleManager unListen(FragmentEvent fragmentEvent, LifeCycleListener listener) {
+        fragmentLifeCycle.removeLifeCycleListener(fragmentEvent, listener);
+        return this;
+    }
+
     public static InitSate getParentState(Fragment fragment) {
         InitSate initState;
         if (fragment.isResumed()) {

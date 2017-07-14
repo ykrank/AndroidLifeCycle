@@ -102,6 +102,16 @@ public class ViewLifeCycleManager {
         return this;
     }
 
+    public ViewLifeCycleManager unListen(ViewEvent viewEvent, LifeCycleListener listener) {
+        if (fragmentLifeCycleManager != null) {
+            fragmentLifeCycleManager.unListen(toFragmentEventEvent(viewEvent), listener);
+        } else {
+            Preconditions.checkNotNull(activityLifeCycleManager);
+            activityLifeCycleManager.unListen(toActivityEvent(viewEvent), listener);
+        }
+        return this;
+    }
+
     private ActivityEvent toActivityEvent(ViewEvent event) {
         switch (event) {
             case START:
