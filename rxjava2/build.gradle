@@ -31,4 +31,5 @@ dependencies {
     compile deps.support.appcompat
     compile deps.rx2.java
     compile deps.rx2.android
+    compile 'com.uber.autodispose:autodispose:0.2.0'
 }
