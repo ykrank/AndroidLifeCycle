@@ -6,11 +6,10 @@ import android.support.v4.app.FragmentManager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 
-import me.ykrank.androidlifecycle.AndroidLifeCycle;
-import me.ykrank.androidlifecycle.event.ActivityEvent;
-import me.ykrank.androidlifecycle.event.FragmentEvent;
-import me.ykrank.androidlifecycle.event.InitSate;
-import me.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
+import com.github.ykrank.androidlifecycle.AndroidLifeCycle;
+import com.github.ykrank.androidlifecycle.event.ActivityEvent;
+import com.github.ykrank.androidlifecycle.event.FragmentEvent;
+import com.github.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
 
 /**
  * test AndroidLifeCycle with fragmentActivity and support fragment in onCreate

@@ -7,10 +7,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import me.ykrank.androidlifecycle.AndroidLifeCycle;
-import me.ykrank.androidlifecycle.event.FragmentEvent;
-import me.ykrank.androidlifecycle.event.ViewEvent;
-import me.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
+import com.github.ykrank.androidlifecycle.AndroidLifeCycle;
+import com.github.ykrank.androidlifecycle.event.FragmentEvent;
+import com.github.ykrank.androidlifecycle.event.ViewEvent;
+import com.github.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
 
 /**
  * Created by ykrank on 2017/7/9.

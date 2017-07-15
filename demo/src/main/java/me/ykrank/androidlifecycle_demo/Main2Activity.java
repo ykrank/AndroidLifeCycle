@@ -1,14 +1,14 @@
 package me.ykrank.androidlifecycle_demo;
 
-import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import me.ykrank.androidlifecycle.AndroidLifeCycle;
-import me.ykrank.androidlifecycle.event.ActivityEvent;
-import me.ykrank.androidlifecycle.event.FragmentEvent;
-import me.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
+import com.github.ykrank.androidlifecycle.AndroidLifeCycle;
+import com.github.ykrank.androidlifecycle.event.ActivityEvent;
+import com.github.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
+
 
 /**
  * test AndroidLifeCycle with fragment after created, and with view
