@@ -29,3 +29,4 @@ dependencies {
     compile deps.support.appcompat
 }
 
+apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
