@@ -7,7 +7,6 @@ import android.view.View;
 
 import me.ykrank.androidlifecycle.AndroidLifeCycle;
 import me.ykrank.androidlifecycle.event.ActivityEvent;
-import me.ykrank.androidlifecycle.event.FragmentEvent;
 import me.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
 
 /**
@@ -34,7 +33,7 @@ public class Main2Activity extends AppCompatActivity {
         findViewById(R.id.button2).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                getFragmentManager().beginTransaction().replace(R.id.layout_fragment, new MainFragment3()).commit();
+                getFragmentManager().beginTransaction().replace(R.id.layout_fragment, new RxjavaFragment()).commit();
             }
         });
 
