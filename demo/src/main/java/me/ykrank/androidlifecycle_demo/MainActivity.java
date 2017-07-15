@@ -12,6 +12,9 @@ import me.ykrank.androidlifecycle.event.FragmentEvent;
 import me.ykrank.androidlifecycle.event.InitSate;
 import me.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
 
+/**
+ * test AndroidLifeCycle with fragmentActivity and support fragment in onCreate
+ */
 public class MainActivity extends AppCompatActivity {
     static final String FRAGMENT_TAG = "me.ykrank.androidlifecycle";
 
