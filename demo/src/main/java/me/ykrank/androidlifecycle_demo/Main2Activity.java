@@ -10,6 +10,9 @@ import me.ykrank.androidlifecycle.event.ActivityEvent;
 import me.ykrank.androidlifecycle.event.FragmentEvent;
 import me.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
 
+/**
+ * test AndroidLifeCycle with fragment after created, and with view
+ */
 public class Main2Activity extends AppCompatActivity {
 
     @Override
