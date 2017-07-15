@@ -1,4 +1,4 @@
-package me.ykrank.androidlifecycle.rxjava2;
+package com.github.ykrank.androidlifecycle.rxjava2;
 
 import android.support.annotation.NonNull;
 import android.view.View;
@@ -6,11 +6,11 @@ import android.view.View;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.MainThreadDisposable;
-import me.ykrank.androidlifecycle.AndroidLifeCycle;
-import me.ykrank.androidlifecycle.event.ViewEvent;
-import me.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
-import me.ykrank.androidlifecycle.manager.ViewLifeCycleManager;
-import me.ykrank.androidlifecycle.util.Util;
+import com.github.ykrank.androidlifecycle.AndroidLifeCycle;
+import com.github.ykrank.androidlifecycle.event.ViewEvent;
+import com.github.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
+import com.github.ykrank.androidlifecycle.manager.ViewLifeCycleManager;
+import com.github.ykrank.androidlifecycle.util.Util;
 
 /**
  * Provide view lifecycle event

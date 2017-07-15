@@ -1,4 +1,4 @@
-package me.ykrank.androidlifecycle.rxjava2;
+package com.github.ykrank.androidlifecycle.rxjava2;
 
 import android.app.Activity;
 import android.content.Context;

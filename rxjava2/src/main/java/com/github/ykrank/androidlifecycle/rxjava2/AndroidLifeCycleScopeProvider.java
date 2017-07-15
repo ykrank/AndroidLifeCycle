@@ -1,4 +1,4 @@
-package me.ykrank.androidlifecycle.rxjava2;
+package com.github.ykrank.androidlifecycle.rxjava2;
 
 import android.app.Activity;
 import android.content.Context;
@@ -12,7 +12,7 @@ import com.uber.autodispose.LifecycleScopeProvider;
 import io.reactivex.Observable;
 import io.reactivex.functions.Function;
 
-import static me.ykrank.androidlifecycle.rxjava2.AndroidEvent.DESTROY;
+import static com.github.ykrank.androidlifecycle.rxjava2.AndroidEvent.DESTROY;
 
 /**
  * A {@link LifecycleScopeProvider} that can provide scoping for Android {@link Fragment}, {@link Activity}, {@link View} classes.

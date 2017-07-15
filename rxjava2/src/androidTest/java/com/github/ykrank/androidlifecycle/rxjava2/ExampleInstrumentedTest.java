@@ -1,4 +1,4 @@
-package me.ykrank.androidlifecycle.rxjava2;
+package com.github.ykrank.androidlifecycle.rxjava2;
 
 import android.content.Context;
 import android.support.test.InstrumentationRegistry;
@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getTargetContext();
 
-        assertEquals("me.ykrank.androidlifecycle.rxjava2.test", appContext.getPackageName());
+        assertEquals("com.github.ykrank.androidlifecycle.rxjava2.test", appContext.getPackageName());
     }
 }

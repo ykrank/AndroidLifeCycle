@@ -1,4 +1,4 @@
-package me.ykrank.androidlifecycle.rxjava2;
+package com.github.ykrank.androidlifecycle.rxjava2;
 
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
@@ -6,11 +6,11 @@ import android.support.v4.app.Fragment;
 import io.reactivex.Observable;
 import io.reactivex.Observer;
 import io.reactivex.android.MainThreadDisposable;
-import me.ykrank.androidlifecycle.AndroidLifeCycle;
-import me.ykrank.androidlifecycle.event.FragmentEvent;
-import me.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
-import me.ykrank.androidlifecycle.manager.FragmentLifeCycleManager;
-import me.ykrank.androidlifecycle.util.Util;
+import com.github.ykrank.androidlifecycle.AndroidLifeCycle;
+import com.github.ykrank.androidlifecycle.event.FragmentEvent;
+import com.github.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
+import com.github.ykrank.androidlifecycle.manager.FragmentLifeCycleManager;
+import com.github.ykrank.androidlifecycle.util.Util;
 
 /**
  * Provide fragment lifecycle event
