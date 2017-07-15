@@ -13,9 +13,8 @@ import me.ykrank.androidlifecycle.manager.FragmentLifeCycleManager;
 import me.ykrank.androidlifecycle.util.Util;
 
 /**
- * Created by ykrank on 2017/7/15.
+ * Provide fragment lifecycle event
  */
-
 final class FragmentEventObservable extends Observable<AndroidEvent> {
     private final FragmentLifeCycleManager lifeCycleManager;
 

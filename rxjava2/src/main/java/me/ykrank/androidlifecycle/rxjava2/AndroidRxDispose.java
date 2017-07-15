@@ -13,7 +13,15 @@ import com.uber.autodispose.ObservableScoper;
 import com.uber.autodispose.SingleScoper;
 
 /**
- * Created by ykrank on 2017/7/15.
+ * Provide scope for rxjava
+ * <p>
+ * The basic flow stencil might look like this:
+ * <pre><code>
+ *   myThingObservable
+ *        .to(AndroidRxDispose.withObservable(fragment))
+ *        .subscribe(...)
+ * </code></pre>
+ * <p>
  */
 
 public class AndroidRxDispose {

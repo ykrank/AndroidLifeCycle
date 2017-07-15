@@ -13,9 +13,8 @@ import me.ykrank.androidlifecycle.manager.ViewLifeCycleManager;
 import me.ykrank.androidlifecycle.util.Util;
 
 /**
- * Created by ykrank on 2017/7/15.
+ * Provide view lifecycle event
  */
-
 final class ViewEventObservable extends Observable<AndroidEvent> {
     private final ViewLifeCycleManager lifeCycleManager;
 

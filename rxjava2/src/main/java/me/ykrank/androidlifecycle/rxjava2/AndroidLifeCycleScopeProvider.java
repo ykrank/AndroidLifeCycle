@@ -15,9 +15,8 @@ import io.reactivex.functions.Function;
 import static me.ykrank.androidlifecycle.rxjava2.AndroidEvent.DESTROY;
 
 /**
- * Created by ykrank on 2017/7/15.
+ * A {@link LifecycleScopeProvider} that can provide scoping for Android {@link Fragment}, {@link Activity}, {@link View} classes.
  */
-
 public class AndroidLifeCycleScopeProvider implements LifecycleScopeProvider<AndroidEvent> {
 
     private static final Function<AndroidEvent, AndroidEvent> CORRESPONDING_EVENTS =

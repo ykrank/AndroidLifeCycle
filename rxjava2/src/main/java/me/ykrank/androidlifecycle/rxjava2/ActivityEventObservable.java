@@ -15,9 +15,8 @@ import me.ykrank.androidlifecycle.manager.ActivityLifeCycleManager;
 import me.ykrank.androidlifecycle.util.Util;
 
 /**
- * Created by ykrank on 2017/7/15.
+ * Provide activity lifecycle event
  */
-
 final class ActivityEventObservable extends Observable<AndroidEvent> {
     private final ActivityLifeCycleManager lifeCycleManager;
 
