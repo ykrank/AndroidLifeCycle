@@ -23,9 +23,7 @@ android {
 
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile(deps.test.espressoCore, {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
+    androidTestCompile deps.test.espressoCore
     compile deps.support.appcompat
 }
 
