@@ -10,6 +10,7 @@ import com.uber.autodispose.LifecycleEndedException;
 import com.uber.autodispose.LifecycleScopeProvider;
 
 import io.reactivex.Observable;
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.functions.Function;
 
 import static com.github.ykrank.androidlifecycle.rxjava2.AndroidEvent.DESTROY;
@@ -60,7 +61,7 @@ public class AndroidLifeCycleScopeProvider implements LifecycleScopeProvider<And
 
     @Override
     public Observable<AndroidEvent> lifecycle() {
-        return lifecycle;
+        return lifecycle.subscribeOn(AndroidSchedulers.mainThread());
     }
 
     @Override

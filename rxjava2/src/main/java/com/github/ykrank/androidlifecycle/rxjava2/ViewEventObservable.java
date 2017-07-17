@@ -16,16 +16,16 @@ import com.github.ykrank.androidlifecycle.util.Util;
  * Provide view lifecycle event
  */
 final class ViewEventObservable extends Observable<AndroidEvent> {
-    private final ViewLifeCycleManager lifeCycleManager;
+    private final View view;
 
     ViewEventObservable(View view) {
-        lifeCycleManager = AndroidLifeCycle.with(view);
+        this.view = view;
     }
 
     @Override
     protected void subscribeActual(final Observer<? super AndroidEvent> observer) {
         Util.assertMainThread();
-        observer.onNext(AndroidEvent.START);
+        ViewLifeCycleManager lifeCycleManager = AndroidLifeCycle.with(view);
 
         LifeCycleListener listener = new LifeCycleListener() {
             @Override
@@ -33,9 +33,11 @@ final class ViewEventObservable extends Observable<AndroidEvent> {
                 observer.onNext(AndroidEvent.DESTROY);
             }
         };
-
         observer.onSubscribe(new ListenerDispose(lifeCycleManager, listener));
+
         lifeCycleManager.listen(ViewEvent.DESTROY, listener);
+
+        observer.onNext(AndroidEvent.START);
     }
 
     private static final class ListenerDispose extends MainThreadDisposable {
