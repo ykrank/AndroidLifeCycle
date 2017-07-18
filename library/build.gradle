@@ -24,7 +24,8 @@ android {
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
     androidTestCompile deps.test.espressoCore
-    compile deps.support.appcompat
+    compile deps.support.v4
+    provided deps.support.annotations
 }
 
 apply from: rootProject.file('gradle/gradle-mvn-push.gradle')
