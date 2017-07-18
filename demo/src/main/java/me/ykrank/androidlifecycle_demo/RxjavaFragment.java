@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 
 import com.github.ykrank.androidlifecycle.AndroidLifeCycle;
+import com.github.ykrank.androidlifecycle.event.ViewEvent;
 import com.github.ykrank.androidlifecycle.rxjava2.AndroidRxDispose;
 
 import java.util.concurrent.TimeUnit;
@@ -49,7 +50,7 @@ public class RxjavaFragment extends android.app.Fragment {
                             }
                         })
                         .observeOn(AndroidSchedulers.mainThread())
-                        .to(AndroidRxDispose.withObservable(v))
+                        .to(AndroidRxDispose.withObservable(v, ViewEvent.PAUSE))
                         .subscribe(new Consumer<Object>() {
                             @Override
                             public void accept(@NonNull Object object) throws Exception {
