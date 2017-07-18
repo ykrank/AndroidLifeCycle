@@ -15,43 +15,48 @@ import com.github.ykrank.androidlifecycle.util.Util;
 /**
  * Provide view lifecycle event
  */
-final class ViewEventObservable extends Observable<AndroidEvent> {
+final class ViewEventObservable extends Observable<AndroidRxEvent> {
     private final View view;
+    private final ViewEvent event;
 
-    ViewEventObservable(View view) {
+    ViewEventObservable(View view, ViewEvent event) {
         this.view = view;
+        this.event = event;
     }
 
     @Override
-    protected void subscribeActual(final Observer<? super AndroidEvent> observer) {
+    protected void subscribeActual(final Observer<? super AndroidRxEvent> observer) {
         Util.assertMainThread();
         ViewLifeCycleManager lifeCycleManager = AndroidLifeCycle.with(view);
 
         LifeCycleListener listener = new LifeCycleListener() {
             @Override
             public void accept() {
-                observer.onNext(AndroidEvent.DESTROY);
+                observer.onNext(AndroidRxEvent.DISPOSE);
             }
         };
-        observer.onSubscribe(new ListenerDispose(lifeCycleManager, listener));
+        observer.onSubscribe(new ListenerDispose(lifeCycleManager, listener, event));
 
-        lifeCycleManager.listen(ViewEvent.DESTROY, listener);
+        lifeCycleManager.listen(event, listener);
 
-        observer.onNext(AndroidEvent.START);
+        observer.onNext(AndroidRxEvent.START);
     }
 
     private static final class ListenerDispose extends MainThreadDisposable {
         private final ViewLifeCycleManager lifeCycleManager;
         private final LifeCycleListener listener;
+        private final ViewEvent event;
 
-        ListenerDispose(@NonNull ViewLifeCycleManager lifeCycleManager, @NonNull LifeCycleListener listener) {
+        ListenerDispose(@NonNull ViewLifeCycleManager lifeCycleManager,
+                        @NonNull LifeCycleListener listener, ViewEvent event) {
             this.lifeCycleManager = lifeCycleManager;
             this.listener = listener;
+            this.event = event;
         }
 
         @Override
         protected void onDispose() {
-            lifeCycleManager.unListen(ViewEvent.DESTROY, listener);
+            lifeCycleManager.unListen(event, listener);
         }
     }
 }

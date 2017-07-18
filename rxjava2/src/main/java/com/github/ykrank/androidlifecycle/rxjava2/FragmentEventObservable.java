@@ -16,22 +16,25 @@ import com.github.ykrank.androidlifecycle.util.Util;
 /**
  * Provide fragment lifecycle event
  */
-final class FragmentEventObservable extends Observable<AndroidEvent> {
+final class FragmentEventObservable extends Observable<AndroidRxEvent> {
     private final Fragment supportFragment;
     private final android.app.Fragment fragment;
+    private final FragmentEvent event;
 
-    FragmentEventObservable(Fragment fragment) {
+    FragmentEventObservable(Fragment fragment, FragmentEvent event) {
         this.supportFragment = fragment;
+        this.event = event;
         this.fragment = null;
     }
 
-    FragmentEventObservable(android.app.Fragment fragment) {
+    FragmentEventObservable(android.app.Fragment fragment, FragmentEvent event) {
+        this.event = event;
         this.supportFragment = null;
         this.fragment = fragment;
     }
 
     @Override
-    protected void subscribeActual(final Observer<? super AndroidEvent> observer) {
+    protected void subscribeActual(final Observer<? super AndroidRxEvent> observer) {
         Util.assertMainThread();
         FragmentLifeCycleManager lifeCycleManager;
         if (supportFragment != null) {
@@ -44,28 +47,31 @@ final class FragmentEventObservable extends Observable<AndroidEvent> {
         LifeCycleListener listener = new LifeCycleListener() {
             @Override
             public void accept() {
-                observer.onNext(AndroidEvent.DESTROY);
+                observer.onNext(AndroidRxEvent.DISPOSE);
             }
         };
-        observer.onSubscribe(new ListenerDispose(lifeCycleManager, listener));
+        observer.onSubscribe(new ListenerDispose(lifeCycleManager, listener, event));
 
-        lifeCycleManager.listen(FragmentEvent.DESTROY, listener);
+        lifeCycleManager.listen(event, listener);
 
-        observer.onNext(AndroidEvent.START);
+        observer.onNext(AndroidRxEvent.START);
     }
 
     private static final class ListenerDispose extends MainThreadDisposable {
         private final FragmentLifeCycleManager lifeCycleManager;
         private final LifeCycleListener listener;
+        private final FragmentEvent event;
 
-        ListenerDispose(@NonNull FragmentLifeCycleManager lifeCycleManager, @NonNull LifeCycleListener listener) {
+        ListenerDispose(@NonNull FragmentLifeCycleManager lifeCycleManager,
+                        @NonNull LifeCycleListener listener, FragmentEvent event) {
             this.lifeCycleManager = lifeCycleManager;
             this.listener = listener;
+            this.event = event;
         }
 
         @Override
         protected void onDispose() {
-            lifeCycleManager.unListen(FragmentEvent.DESTROY, listener);
+            lifeCycleManager.unListen(event, listener);
         }
     }
 }

@@ -16,43 +16,48 @@ import io.reactivex.android.MainThreadDisposable;
 /**
  * Provide activity lifecycle event
  */
-final class ActivityEventObservable extends Observable<AndroidEvent> {
+final class ActivityEventObservable extends Observable<AndroidRxEvent> {
     private final Context context;
+    private final ActivityEvent event;
 
-    ActivityEventObservable(Context context) {
+    ActivityEventObservable(Context context, ActivityEvent event) {
         this.context = context;
+        this.event = event;
     }
 
     @Override
-    protected void subscribeActual(final Observer<? super AndroidEvent> observer) {
+    protected void subscribeActual(final Observer<? super AndroidRxEvent> observer) {
         Util.assertMainThread();
         ActivityLifeCycleManager lifeCycleManager = AndroidLifeCycle.with(context);
 
         LifeCycleListener listener = new LifeCycleListener() {
             @Override
             public void accept() {
-                observer.onNext(AndroidEvent.DESTROY);
+                observer.onNext(AndroidRxEvent.DISPOSE);
             }
         };
-        observer.onSubscribe(new ListenerDispose(lifeCycleManager, listener));
+        observer.onSubscribe(new ListenerDispose(lifeCycleManager, listener, event));
 
-        lifeCycleManager.listen(ActivityEvent.DESTROY, listener);
+        lifeCycleManager.listen(event, listener);
 
-        observer.onNext(AndroidEvent.START);
+        observer.onNext(AndroidRxEvent.START);
     }
 
     private static final class ListenerDispose extends MainThreadDisposable {
         private final ActivityLifeCycleManager lifeCycleManager;
         private final LifeCycleListener listener;
+        private final ActivityEvent event;
 
-        ListenerDispose(@NonNull ActivityLifeCycleManager lifeCycleManager, @NonNull LifeCycleListener listener) {
+        ListenerDispose(@NonNull ActivityLifeCycleManager lifeCycleManager,
+                        @NonNull LifeCycleListener listener, ActivityEvent event) {
             this.lifeCycleManager = lifeCycleManager;
             this.listener = listener;
+            this.event = event;
         }
 
         @Override
         protected void onDispose() {
-            lifeCycleManager.unListen(ActivityEvent.DESTROY, listener);
+            lifeCycleManager.unListen(event, listener);
         }
     }
 }
