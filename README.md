@@ -1,4 +1,7 @@
 ﻿# AndroidLifeCycle
+
+[中文说明][chinese-readme]
+
 Easy way to handle android lifecycle
 
 **AndroidLifeCycle** is an android tool for simply add listener to lifecycle of fragment or activity.You can also listen to wrapped context if base context is activity, or listen to view bound fragment or context. 
@@ -49,3 +52,4 @@ License
 
 [android-arc-lifecycle]: https://developer.android.com/topic/libraries/architecture/lifecycle.html
 [androidautodispose]: https://github.com/ykrank/AndroidAutoDispose
+[chinese-readme]: https://github.com/ykrank/AndroidLifeCycle/blob/master/README-ZH.md
