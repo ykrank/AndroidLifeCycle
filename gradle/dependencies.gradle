@@ -17,6 +17,7 @@ def rx2 = [
 def support = [
         appcompat  : "com.android.support:appcompat-v7:${versions.support}",
         annotations: "com.android.support:support-annotations:${versions.support}",
+		v4         : "com.android.support:support-v4:${versions.support}",
         constraint : "com.android.support.constraint:constraint-layout:1.0.2"
 ]
 
