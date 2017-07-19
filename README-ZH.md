@@ -1,39 +1,36 @@
 ﻿# AndroidLifeCycle
-===========
-Easy way to handle android lifecycle
+更简单添加生命周期事件监听
 
-**AndroidLifeCycle** is an android tool for simply add listener to lifecycle of fragment or activity.You can also listen to wrapped context if base context is activity, or listen to view bound fragment or context. Support rxjava2 auto dispose.
+**AndroidLifeCycle** 是一个为Android Fragment, Activity方便添加监听的工具。你也可以为基础Context是Activity的Context, 或者已绑定Activity或者Fragment的View添加监听。
 
-Overview
+概述
 --------
-Often android application, you need response to some lifecycle event of fragment or activity(especially onStop or onDestory to release source). In general, we override fragment or activity event method. but sometime we need bind listener in other place, then i built this tools.
+在Android应用的很多时候，你需要响应一些来自Fragment或者Activity的生命周期回调（特别是在onStop和onDestory中释放资源）。一般情况下，我们都是直接在Fragment或者Activity的实现中重写相关事件，但有时我们需要在对象外部绑定和解绑生命周期事件。为了应对这种情况，我开发了这个工具。
 
-The idea is simple: add a empty fragment to activity fragmentManager or fragment childFragmentManager to dispatch lifecycle event, call your listener if lifecycle event arrive.
+思路很简单：为activity的fragmentManager或者fragment的childFragmentManager添加一个空的fragment来分发生命周期事件，在对应事件来到时调用你注册的回调。
 
-### Motivations
-There is other lifecycle library like [android arch lifecycle][1]. but you should extend their base activity, base fragment, or implements their interface. In this library, you need not extend or implements anything, just use 
+### 动机
+之前也有一些生命周期框架，如[android arch lifecycle][android-arc-lifecycle]。但是它们都要求你继承它们的基础activity或者基础fragment，或者在你的基础类中实现他们的生命周期分发接口。但是在这个库中，你不需要基础activity或者fragment继承或者实现任何东西，只需要在使用时用以下方式绑定就好：
+
 ```
 AndroidLifeCycle.with(fragment)
 AndroidLifeCycle.with(activity)
 AndroidLifeCycle.with(context)
 AndroidLifeCycle.with(view)
 ```
-then listen to lifecycle event anywhere.
+然后就可以在任何地方添加回调了（当然要在对应组件生命周期之类绑定）。
 
-Work with Rxjava
+Rxjava 的自动解绑
 --------
-Do not support Rxjava1.
-You can add rxjava dispose support library, and then just
-```
-myThingObservable
-    .to(AndroidRxDispose.withObservable(lifecycleContext))
-    .subscribe(...)
-```
-myThingObservable can be Rxjava Observable, Single, Completable, Maybe, Flowable.
-lifecycleContext can be Activity, Fragment, View
+参照 [AndroidAutoDispose][androidautodispose]
 
-Download
+下载
 --------
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.ykrank/androidlifecycle.svg)](https://mvnrepository.com/artifact/com.github.ykrank/androidlifecycle)
+
+```gradle
+compile 'com.github.ykrank:androidlifecycle:x.y.z'
+```
 
 License
 -------
@@ -51,4 +48,5 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-[1]: https://developer.android.com/topic/libraries/architecture/lifecycle.html
+[android-arc-lifecycle]: https://developer.android.com/topic/libraries/architecture/lifecycle.html
+[androidautodispose]: https://github.com/ykrank/AndroidAutoDispose

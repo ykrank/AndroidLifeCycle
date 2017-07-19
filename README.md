@@ -1,39 +1,35 @@
 ﻿# AndroidLifeCycle
-===========
 Easy way to handle android lifecycle
 
-**AndroidLifeCycle** is an android tool for simply add listener to lifecycle of fragment or activity.You can also listen to wrapped context if base context is activity, or listen to view bound fragment or context. Support rxjava2 auto dispose.
+**AndroidLifeCycle** is an android tool for simply add listener to lifecycle of fragment or activity.You can also listen to wrapped context if base context is activity, or listen to view bound fragment or context. 
 
 Overview
 --------
-Often android application, you need response to some lifecycle event of fragment or activity(especially onStop or onDestory to release source). In general, we override fragment or activity event method. but sometime we need bind listener in other place, then i built this tools.
+Often in android application, you need response to some lifecycle event of fragment or activity(especially onStop or onDestory to release source). In general, we override fragment or activity event method. but sometime we need bind listener in other place, then i built this tools.
 
 The idea is simple: add a empty fragment to activity fragmentManager or fragment childFragmentManager to dispatch lifecycle event, call your listener if lifecycle event arrive.
 
 ### Motivations
-There is other lifecycle library like [android arch lifecycle][1]. but you should extend their base activity, base fragment, or implements their interface. In this library, you need not extend or implements anything, just use 
+There is other lifecycle library like [android arch lifecycle][android-arc-lifecycle]. but you should extend their base activity, base fragment, or implements their interface. In this library, you need not extend or implements anything, just use 
 ```
 AndroidLifeCycle.with(fragment)
 AndroidLifeCycle.with(activity)
 AndroidLifeCycle.with(context)
 AndroidLifeCycle.with(view)
 ```
-then listen to lifecycle event anywhere.
+then listen to lifecycle event anywhere(of course when activity or fragment is active).
 
-Work with Rxjava
+Rxjava auto dispose
 --------
-Do not support Rxjava1.
-You can add rxjava dispose support library, and then just
-```
-myThingObservable
-    .to(AndroidRxDispose.withObservable(lifecycleContext))
-    .subscribe(...)
-```
-myThingObservable can be Rxjava Observable, Single, Completable, Maybe, Flowable.
-lifecycleContext can be Activity, Fragment, View
+See [AndroidAutoDispose][androidautodispose]
 
 Download
 --------
+[![Maven Central](https://img.shields.io/maven-central/v/com.github.ykrank/androidlifecycle.svg)](https://mvnrepository.com/artifact/com.github.ykrank/androidlifecycle)
+
+```gradle
+compile 'com.github.ykrank:androidlifecycle:x.y.z'
+```
 
 License
 -------
@@ -51,4 +47,5 @@ License
     See the License for the specific language governing permissions and
     limitations under the License.
 
-[1]: https://developer.android.com/topic/libraries/architecture/lifecycle.html
+[android-arc-lifecycle]: https://developer.android.com/topic/libraries/architecture/lifecycle.html
+[androidautodispose]: https://github.com/ykrank/AndroidAutoDispose
