@@ -22,6 +22,121 @@ AndroidLifeCycle.with(view)
 ```
 then listen to lifecycle event anywhere(of course when activity or fragment is active).
 
+Usage
+--------
+You can see usage in demo.
+
+Listen mActivity :
+```
+AndroidLifeCycle.with(mActivity)
+                .listen(ActivityEvent.START, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.START");
+                    }
+                })
+                .listen(ActivityEvent.RESUME, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.RESUME");
+                    }
+                })
+                .listen(ActivityEvent.PAUSE, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.PAUSE");
+                    }
+                })
+                .listen(ActivityEvent.STOP, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.STOP");
+                    }
+                })
+                .listen(ActivityEvent.DESTROY, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.DESTROY");
+                    }
+                });
+```
+Listen mFragment :
+```
+AndroidLifeCycle.with(mFragmetn5)
+                        .listen(FragmentEvent.START, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.START");
+                            }
+                        })
+                        .listen(FragmentEvent.RESUME, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.RESUME");
+                            }
+                        })
+                        .listen(FragmentEvent.PAUSE, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.PAUSE");
+                            }
+                        })
+                        .listen(FragmentEvent.STOP, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.STOP");
+                            }
+                        })
+                        .listen(FragmentEvent.DESTROY_VIEW, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.DESTROY_VIEW");
+                            }
+                        })
+                        .listen(FragmentEvent.DESTROY, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.DESTROY");
+                            }
+                        });
+```
+Bind mFragment to mView, then listen it :
+```
+AndroidLifeCycle.bindFragment(mView, mFragment);
+// then
+AndroidLifeCycle.with(mView)
+        .listen(ViewEvent.START, new LifeCycleListener() {
+            @Override
+            public void accept() {
+                l("ViewEvent.START");
+            }
+        })
+        .listen(ViewEvent.RESUME, new LifeCycleListener() {
+            @Override
+            public void accept() {
+                l("ViewEvent.RESUME");
+            }
+        })
+        .listen(ViewEvent.PAUSE, new LifeCycleListener() {
+            @Override
+            public void accept() {
+                l("ViewEvent.PAUSE");
+            }
+        })
+        .listen(ViewEvent.STOP, new LifeCycleListener() {
+            @Override
+            public void accept() {
+                l("ViewEvent.STOP");
+            }
+        })
+        .listen(ViewEvent.DESTROY, new LifeCycleListener() {
+            @Override
+            public void accept() {
+                l("ViewEvent.DESTROY");
+            }
+        });
+```
+
 Rxjava auto dispose
 --------
 See [AndroidAutoDispose][androidautodispose]

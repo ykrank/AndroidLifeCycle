@@ -20,6 +20,121 @@ AndroidLifeCycle.with(view)
 ```
 然后就可以在任何地方添加回调了（当然要在对应组件生命周期之类绑定）。
 
+使用方法
+--------
+你也可以参照demo中的使用方法。
+
+监听 mActivity :
+```
+AndroidLifeCycle.with(mActivity)
+                .listen(ActivityEvent.START, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.START");
+                    }
+                })
+                .listen(ActivityEvent.RESUME, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.RESUME");
+                    }
+                })
+                .listen(ActivityEvent.PAUSE, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.PAUSE");
+                    }
+                })
+                .listen(ActivityEvent.STOP, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.STOP");
+                    }
+                })
+                .listen(ActivityEvent.DESTROY, new LifeCycleListener() {
+                    @Override
+                    public void accept() {
+                        l("ActivityEvent.DESTROY");
+                    }
+                });
+```
+监听 mFragment :
+```
+AndroidLifeCycle.with(mFragmetn5)
+                        .listen(FragmentEvent.START, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.START");
+                            }
+                        })
+                        .listen(FragmentEvent.RESUME, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.RESUME");
+                            }
+                        })
+                        .listen(FragmentEvent.PAUSE, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.PAUSE");
+                            }
+                        })
+                        .listen(FragmentEvent.STOP, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.STOP");
+                            }
+                        })
+                        .listen(FragmentEvent.DESTROY_VIEW, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.DESTROY_VIEW");
+                            }
+                        })
+                        .listen(FragmentEvent.DESTROY, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("FragmentEvent.DESTROY");
+                            }
+                        });
+```
+将mFragment和mView绑定，然后监听：
+```
+AndroidLifeCycle.bindFragment(mView, mFragment);
+// then
+AndroidLifeCycle.with(mView)
+        .listen(ViewEvent.START, new LifeCycleListener() {
+            @Override
+            public void accept() {
+                l("ViewEvent.START");
+            }
+        })
+        .listen(ViewEvent.RESUME, new LifeCycleListener() {
+            @Override
+            public void accept() {
+                l("ViewEvent.RESUME");
+            }
+        })
+        .listen(ViewEvent.PAUSE, new LifeCycleListener() {
+            @Override
+            public void accept() {
+                l("ViewEvent.PAUSE");
+            }
+        })
+        .listen(ViewEvent.STOP, new LifeCycleListener() {
+            @Override
+            public void accept() {
+                l("ViewEvent.STOP");
+            }
+        })
+        .listen(ViewEvent.DESTROY, new LifeCycleListener() {
+            @Override
+            public void accept() {
+                l("ViewEvent.DESTROY");
+            }
+        });
+```
+
 Rxjava 的自动解绑
 --------
 参照 [AndroidAutoDispose][androidautodispose]
