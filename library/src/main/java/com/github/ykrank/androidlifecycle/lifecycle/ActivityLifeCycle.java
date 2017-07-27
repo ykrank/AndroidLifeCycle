@@ -1,5 +1,6 @@
 package com.github.ykrank.androidlifecycle.lifecycle;
 
+import android.support.annotation.AnyThread;
 import android.support.annotation.NonNull;
 import android.support.v4.util.ArraySet;
 
@@ -76,14 +77,22 @@ public class ActivityLifeCycle implements LifeCycle {
      */
     @NonNull
     List<LifeCycleListener> getLifeCycleListeners(ActivityEvent activityEvent) {
-        return Util.getSnapshot(getDirtyLifeCycleListeners(activityEvent));
+        synchronized (this) {
+            return Util.getSnapshot(getDirtyLifeCycleListeners(activityEvent));
+        }
     }
 
+    @AnyThread
     public boolean addLifeCycleListener(ActivityEvent activityEvent, LifeCycleListener listener) {
-        return getDirtyLifeCycleListeners(activityEvent).add(listener);
+        synchronized (this) {
+            return getDirtyLifeCycleListeners(activityEvent).add(listener);
+        }
     }
 
+    @AnyThread
     public boolean removeLifeCycleListener(ActivityEvent activityEvent, LifeCycleListener listener) {
-        return getDirtyLifeCycleListeners(activityEvent).remove(listener);
+        synchronized (this) {
+            return getDirtyLifeCycleListeners(activityEvent).remove(listener);
+        }
     }
 }

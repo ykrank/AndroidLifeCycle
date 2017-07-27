@@ -65,7 +65,6 @@ public class FragmentLifeCycle implements LifeCycle {
 
     @NonNull
     private Set<LifeCycleListener> getDirtyLifeCycleListeners(FragmentEvent fragmentEvent) {
-        Util.assertMainThread();
         Set<LifeCycleListener> lifeCycleListenerSet = lifeCycleListener.get(fragmentEvent);
         if (lifeCycleListenerSet == null) {
             lifeCycleListenerSet = new ArraySet<>();
@@ -79,14 +78,20 @@ public class FragmentLifeCycle implements LifeCycle {
      */
     @NonNull
     List<LifeCycleListener> getLifeCycleListeners(FragmentEvent fragmentEvent) {
-        return Util.getSnapshot(getDirtyLifeCycleListeners(fragmentEvent));
+        synchronized (this) {
+            return Util.getSnapshot(getDirtyLifeCycleListeners(fragmentEvent));
+        }
     }
 
     public boolean addLifeCycleListener(FragmentEvent fragmentEvent, LifeCycleListener listener) {
-        return getDirtyLifeCycleListeners(fragmentEvent).add(listener);
+        synchronized (this) {
+            return getDirtyLifeCycleListeners(fragmentEvent).add(listener);
+        }
     }
 
     public boolean removeLifeCycleListener(FragmentEvent fragmentEvent, LifeCycleListener listener) {
-        return getDirtyLifeCycleListeners(fragmentEvent).remove(listener);
+        synchronized (this) {
+            return getDirtyLifeCycleListeners(fragmentEvent).remove(listener);
+        }
     }
 }

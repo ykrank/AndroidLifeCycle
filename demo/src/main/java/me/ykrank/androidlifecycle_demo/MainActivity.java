@@ -10,6 +10,7 @@ import com.github.ykrank.androidlifecycle.AndroidLifeCycle;
 import com.github.ykrank.androidlifecycle.event.ActivityEvent;
 import com.github.ykrank.androidlifecycle.event.FragmentEvent;
 import com.github.ykrank.androidlifecycle.lifecycle.LifeCycleListener;
+import com.github.ykrank.androidlifecycle.manager.FragmentLifeCycleManager;
 
 /**
  * test AndroidLifeCycle with fragmentActivity and support fragment in onCreate
@@ -21,12 +22,12 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setTitle("MainActivity");
-        
+
         l("onCreate");
         setContentView(R.layout.activity_main);
 
         final MainFragment mainFragment = new MainFragment();
-        
+
         FragmentManager fm = getSupportFragmentManager();
         fm.beginTransaction().add(R.id.layout_fragment, mainFragment).commitNow();
 
@@ -62,43 +63,50 @@ public class MainActivity extends AppCompatActivity {
                     }
                 });
 
-        AndroidLifeCycle.with(mainFragment)
-                .listen(FragmentEvent.START, new LifeCycleListener() {
+        final FragmentLifeCycleManager manager = AndroidLifeCycle.with(mainFragment);
+
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                manager.listen(FragmentEvent.START, new LifeCycleListener() {
                     @Override
                     public void accept() {
                         l("MainFragment FragmentEvent.START");
                     }
                 })
-                .listen(FragmentEvent.RESUME, new LifeCycleListener() {
-                    @Override
-                    public void accept() {
-                        l("MainFragment FragmentEvent.RESUME");
-                    }
-                })
-                .listen(FragmentEvent.PAUSE, new LifeCycleListener() {
-                    @Override
-                    public void accept() {
-                        l("MainFragment FragmentEvent.PAUSE");
-                    }
-                })
-                .listen(FragmentEvent.STOP, new LifeCycleListener() {
-                    @Override
-                    public void accept() {
-                        l("MainFragment FragmentEvent.STOP");
-                    }
-                })
-                .listen(FragmentEvent.DESTROY_VIEW, new LifeCycleListener() {
-                    @Override
-                    public void accept() {
-                        l("MainFragment FragmentEvent.DESTROY_VIEW");
-                    }
-                })
-                .listen(FragmentEvent.DESTROY, new LifeCycleListener() {
-                    @Override
-                    public void accept() {
-                        l("MainFragment FragmentEvent.DESTROY");
-                    }
-                });
+                        .listen(FragmentEvent.RESUME, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("MainFragment FragmentEvent.RESUME");
+                            }
+                        })
+                        .listen(FragmentEvent.PAUSE, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("MainFragment FragmentEvent.PAUSE");
+                            }
+                        })
+                        .listen(FragmentEvent.STOP, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("MainFragment FragmentEvent.STOP");
+                            }
+                        })
+                        .listen(FragmentEvent.DESTROY_VIEW, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("MainFragment FragmentEvent.DESTROY_VIEW");
+                            }
+                        })
+                        .listen(FragmentEvent.DESTROY, new LifeCycleListener() {
+                            @Override
+                            public void accept() {
+                                l("MainFragment FragmentEvent.DESTROY");
+                            }
+                        });
+            }
+        }).start();
+
     }
 
     @Override

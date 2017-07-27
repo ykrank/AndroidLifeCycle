@@ -1,5 +1,6 @@
 package com.github.ykrank.androidlifecycle.manager;
 
+import android.support.annotation.AnyThread;
 import android.support.annotation.NonNull;
 import android.support.v4.app.Fragment;
 
@@ -22,11 +23,13 @@ public class FragmentLifeCycleManager implements LifeCycleManager {
         return fragmentLifeCycle;
     }
 
+    @AnyThread
     public FragmentLifeCycleManager listen(FragmentEvent fragmentEvent, LifeCycleListener listener) {
         fragmentLifeCycle.addLifeCycleListener(fragmentEvent, listener);
         return this;
     }
 
+    @AnyThread
     public FragmentLifeCycleManager unListen(FragmentEvent fragmentEvent, LifeCycleListener listener) {
         fragmentLifeCycle.removeLifeCycleListener(fragmentEvent, listener);
         return this;

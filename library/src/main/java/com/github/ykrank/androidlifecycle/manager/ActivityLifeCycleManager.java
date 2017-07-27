@@ -1,5 +1,6 @@
 package com.github.ykrank.androidlifecycle.manager;
 
+import android.support.annotation.AnyThread;
 import android.support.annotation.NonNull;
 
 import com.github.ykrank.androidlifecycle.event.ActivityEvent;
@@ -20,11 +21,13 @@ public class ActivityLifeCycleManager implements LifeCycleManager {
         return activityLifeCycle;
     }
 
+    @AnyThread
     public ActivityLifeCycleManager listen(ActivityEvent activityEvent, LifeCycleListener listener) {
         activityLifeCycle.addLifeCycleListener(activityEvent, listener);
         return this;
     }
 
+    @AnyThread
     public ActivityLifeCycleManager unListen(ActivityEvent activityEvent, LifeCycleListener listener) {
         activityLifeCycle.removeLifeCycleListener(activityEvent, listener);
         return this;

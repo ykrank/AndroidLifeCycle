@@ -1,5 +1,7 @@
 package com.github.ykrank.androidlifecycle.manager;
 
+import android.support.annotation.AnyThread;
+import android.support.annotation.MainThread;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -33,6 +35,7 @@ public class ViewLifeCycleManager {
         this.activityLifeCycleManager = activityLifeCycleManager;
     }
 
+    @MainThread
     @NonNull
     public static ViewLifeCycleManager get(@NonNull View view) {
         Util.assertMainThread();
@@ -71,10 +74,12 @@ public class ViewLifeCycleManager {
         return manager;
     }
 
+    @MainThread
     public static void bindFragment(View view, Fragment fragment) {
         view.setTag(R.id.tag_view_lifecycle_bind_fragment, new WeakReference<>(fragment));
     }
 
+    @MainThread
     public static void bindFragment(View view, android.app.Fragment fragment) {
         view.setTag(R.id.tag_view_lifecycle_bind_fragment, new WeakReference<>(fragment));
     }
@@ -92,6 +97,7 @@ public class ViewLifeCycleManager {
         return null;
     }
 
+    @AnyThread
     public ViewLifeCycleManager listen(ViewEvent viewEvent, LifeCycleListener listener) {
         if (fragmentLifeCycleManager != null) {
             fragmentLifeCycleManager.listen(toFragmentEventEvent(viewEvent), listener);
@@ -102,6 +108,7 @@ public class ViewLifeCycleManager {
         return this;
     }
 
+    @AnyThread
     public ViewLifeCycleManager unListen(ViewEvent viewEvent, LifeCycleListener listener) {
         if (fragmentLifeCycleManager != null) {
             fragmentLifeCycleManager.unListen(toFragmentEventEvent(viewEvent), listener);
